@@ -110,7 +110,7 @@ do_oe_setup()
         local path="$1"
         local branch="$BRANCH"
 
-        mkdir -p "$path"
+        mkdir -p "$path/oe"
 
 	oedl=${TOPDIR}/build/oe/oe-download
         [ "x$OE_BUILD_CACHE_DL" != "x" ] && oedl="$OE_BUILD_CACHE_DL"
