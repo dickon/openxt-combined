@@ -19,6 +19,8 @@ That approach has some assumptions:
 1. That centralised builds had write access to that branch. 
 2. That there was a single set of repositories that contained all the branches that can be
    built automatically.
+3. That people understand the multiple repository approach and tagging system, which is 
+   complex and unusual.
 
 Assumption 2 is likely to be problematic in a scaled up operation.
 
@@ -27,6 +29,9 @@ Multi repository development have some disadvantages:
 1. Coordinating pull requests and reviews over multiple repositories is problematic.
 2. We need to construct machinery to tag across multiple repositories and to checkout
    appropriately.
+3. Building OpenXT is not as simple as typing make, since you have to follow lots of steps
+   and know what's going on with multiple repositories, which is a barrier to getting
+   people going.
 
 # Approach
 
