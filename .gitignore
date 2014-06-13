@@ -1,3 +1,4 @@
 misc/*
 build/*
 build-output/*
+/linux-3.11-pq/master/status
