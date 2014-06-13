@@ -60,9 +60,6 @@ META_OE_TAG=24e1ebc21da20240a41984b7f5c90aa9bd65a7e8
 META_JAVA_REPO=https://github.com/woglinde/meta-java.git
 META_JAVA_TAG=5d528acac0eab6cfaa4ed3c290c7db3acd5047bf
 
-META_SELINUX_REPO=git://git.yoctoproject.org/meta-selinux
-META_SELINUX_TAG=8e952c7da126d30f4aecb33abd3ef9252785cb40
-
 # End of configuration
 
 die() {
@@ -111,7 +108,6 @@ if [ "$1" != "env" ]; then
   getgit $REPOS/openembedded-core $OE_CORE_REPO $OE_CORE_TAG
   getgit $REPOS/meta-openembedded $META_OE_REPO $META_OE_TAG
   getgit $REPOS/meta-java $META_JAVA_REPO $META_JAVA_TAG
-  getgit $REPOS/meta-selinux $META_SELINUX_REPO $META_SELINUX_TAG
 fi
 
 BBPATH=$OE_XENCLIENT_DIR/xenclient:$REPOS/openembedded:$OE_XENCLIENT_DIR/oe-addons
