@@ -1563,16 +1563,6 @@ sanitize_build_id() {
         echo "$1" | grep -q '^[0-9]\+$'
 }
 
-if [ "x$CONFIG" != "x" ] ; then
-        . "$CONFIG"
-else
-        if [ ! -f ".config" ] ; then
-                echo ".config file is missing"
-                exit 1
-        fi
-        . .config
-fi
-
 RAMDISK=0
 ORIGIN_BRANCH="$BRANCH"
 BUILD_SCRIPTS="`pwd`/`dirname $0`"
