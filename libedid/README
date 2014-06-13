@@ -1,0 +1,21 @@
+#
+#
+# README:
+#
+# Copyright (c) 2011 Citrix Systems Inc.,
+# All rights reserved.
+#
+# $Id:$
+#
+# $Log:$
+#
+#
+#
+
+EDIDMode *edid_parse(uint8_t *edid);
+
+Parse an edid block, returns
+the native and highest resolution mode of 
+the monitor.
+
+

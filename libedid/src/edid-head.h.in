@@ -1,0 +1,178 @@
+/*
+ * edid.h.in:
+ *
+ * Copyright (c) 2011 Citrix Systems Inc.,
+ * All rights reserved.
+ *
+ */
+
+/*
+ * $Id:$
+ */
+
+/*
+ * $Log:$
+ *
+ */
+
+/* MAKE ABSOLUTELY SURE THAT YOU ARE EDITING THE edid-head.h.in */
+/* FILE FROM WHICH THIS IS GENERATED - OTHERWISE YOUR EDITS */
+/* WILL BE LOST */
+
+#ifndef __EDID_H__
+#define __EDID_H__
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#include <stdio.h>
+
+/*the integer constants here are set by configure*/
+
+/*get uint32_t and friends defined */
+#if @I2_HAVE_STDINT_H@
+#include <stdint.h>
+#elif @I2_HAVE_SYS_INT_TYPES_H@
+#include <sys/int_types.h>
+#endif
+#if @I2_HAVE_UNISTD_H@
+#include <unistd.h>
+#endif
+
+/* If the following is <> then configure failed to find where */
+/* struct tm was defined - report it as a bug */
+
+/*get struct tm defined*/
+#include <@I2_TM_H@>
+
+#define EDID_SIZE      256
+
+  typedef struct EDIDMode_struct
+  {
+    int valid;                  /*Array is terminated by one with valid=0 */
+
+    int clock;                  /*Pixel clock in MHZ */
+    int hactive;
+    int hsync_start;
+    int hsync_end;
+    int htotal;
+    int vactive;
+    int vsync_start;
+    int vsync_end;
+    int vtotal;
+  } EDIDMode;
+
+#define EDID_VIDEO_INPUT_SIGNAL_ANALOG             0x00
+#define EDID_VIDEO_INPUT_LVL_0700_0300_1000V       0x00
+#define EDID_VIDEO_INPUT_LVL_0714_0286_1000V       0x20
+#define EDID_VIDEO_INPUT_LVL_1000_0400_1400V       0x40
+#define EDID_VIDEO_INPUT_LVL_0700_0000_0700V       0x60
+#define EDID_VIDEO_INPUT_SETUP_BLANK_EQ_BLACK      0x00
+#define EDID_VIDEO_INPUT_SETUP_B2B_PEDESTRAL       0x10
+#define EDID_VIDEO_INPUT_SYNC_SEPARATE             0x08
+#define EDID_VIDEO_INPUT_SYNC_COMPOSITE_ON_HORIZ   0x04
+#define EDID_VIDEO_INPUT_SYNC_COMPOSITE_ON_GREEN   0x02
+#define EDID_VIDEO_INPUT_SERRATION_ON_VSYNC        0x01
+
+#define EDID_VIDEO_INPUT_SIGNAL_DIGITAL            0x80
+#define EDID_VIDEO_INPUT_COLOR_DEPTH_UNDEFINED     0x00
+#define EDID_VIDEO_INPUT_COLOR_DEPTH_6BITS         0x10
+#define EDID_VIDEO_INPUT_COLOR_DEPTH_8BITS         0x20
+#define EDID_VIDEO_INPUT_COLOR_DEPTH_10BITS        0x30
+#define EDID_VIDEO_INPUT_COLOR_DEPTH_12BITS        0x40
+#define EDID_VIDEO_INPUT_COLOR_DEPTH_14BITS        0x50
+#define EDID_VIDEO_INPUT_COLOR_DEPTH_16BITS        0x60
+#define EDID_VIDEO_INPUT_INTERFACE_UNDEFINED       0x00
+#define EDID_VIDEO_INPUT_INTERFACE_DVI             0x01
+#define EDID_VIDEO_INPUT_INTERFACE_HDMIA           0x02
+#define EDID_VIDEO_INPUT_INTERFACE_HDMIB           0x03
+#define EDID_VIDEO_INPUT_INTERFACE_MDDI            0x04
+#define EDID_VIDEO_INPUT_INTERFACE_DP              0x05
+
+#define EDID_DISPLAY_SIZE_UNDEFINED                0
+#define EDID_DISPLAY_SIZE(h,v) \
+  ((((v) & 0xff) << 8) | ((h) & 0xff))
+#define EDID_DISPLAY_LANDSCAPE_ASPECT_RATIO(ar) \
+  ((int)(((ar) * 100f) - 99f) & 0xff)
+#define EDID_DISPLAY_PORTRAIT_ASPECT_RATIO(ar) \
+  (((int)((100f / (ar)) - 99f) & 0xff) << 8)
+
+#define EDID_DISPLAY_SUPPORT_DPM_STANDBY           0x80
+#define EDID_DISPLAY_SUPPORT_DPM_SUSPEND           0x40
+#define EDID_DISPLAY_SUPPORT_DPM_VLP               0x20
+#define EDID_DISPLAY_SUPPORT_COLOR_GREYSCALE       0x00
+#define EDID_DISPLAY_SUPPORT_COLOR_RGB             0x08
+#define EDID_DISPLAY_SUPPORT_COLOR_NONRGB          0x10
+#define EDID_DISPLAY_SUPPORT_COLOR_UNDEF           0x18
+#define EDID_DISPLAY_SUPPORT_COLOR_RGB444          0x00
+#define EDID_DISPLAY_SUPPORT_COLOR_YCRCB444        0x08
+#define EDID_DISPLAY_SUPPORT_COLOR_YCRCB422        0x10
+#define EDID_DISPLAY_SUPPORT_SRGB_DEFAULT          0x04
+#define EDID_DISPLAY_SUPPORT_PREFERRED_MODE        0x02
+#define EDID_DISPLAY_SUPPORT_FREQ_CONTINUOUS       0x01
+
+
+#define EDID_EST_TIMING_800x600_60HZ            0x00001
+#define EDID_EST_TIMING_800x600_56HZ            0x00002
+#define EDID_EST_TIMING_640x480_75HZ            0x00004
+#define EDID_EST_TIMING_640x480_72HZ            0x00008
+#define EDID_EST_TIMING_640x480_67HZ            0x00010
+#define EDID_EST_TIMING_640x480_60HZ            0x00020
+#define EDID_EST_TIMING_720x400_88HZ            0x00040
+#define EDID_EST_TIMING_720x400_70HZ            0x00080
+#define EDID_EST_TIMING_1280x1024_75HZ          0x00100
+#define EDID_EST_TIMING_1024x768_75HZ           0x00200
+#define EDID_EST_TIMING_1024x768_70HZ           0x00400
+#define EDID_EST_TIMING_1024x768_60HZ           0x00800
+#define EDID_EST_TIMING_1024x768_87HZ           0x01000
+#define EDID_EST_TIMING_832x624_75HZ            0x02000
+#define EDID_EST_TIMING_800x600_75HZ            0x04000
+#define EDID_EST_TIMING_800x600_72HZ            0x08000
+#define EDID_EST_TIMING_1152x870_75HZ           0x10000
+
+
+#define EDID_STD_TIMING_AR_16_10                0
+#define EDID_STD_TIMING_AR_4_3                  1
+#define EDID_STD_TIMING_AR_5_4                  2
+#define EDID_STD_TIMING_AR_16_9                 3
+
+#define EDID_STD_TIMING_UNUSED                  0x0101
+#define EDID_STD_TIMING(hres, aspect_ratio, hz) \
+  ((aspect_ratio << 14) | (((hz - 60) & 0x3f) << 8) | (((hres) / 8) - 31) & 0xff)
+
+#define EDID_DET_TIMING_10KHZ                   (1)
+
+#define EDID_DET_TIMING_SIGNAL_INTERLACED       0x80
+#define EDID_DET_TIMING_STEREO_FIELD_SEQ_R      0x20
+#define EDID_DET_TIMING_STEREO_FIELD_SEQ_L      0x40
+#define EDID_DET_TIMING_STEREO_2WAY_INTRLVD_R   0x21
+#define EDID_DET_TIMING_STEREO_2WAY_INTRLVD_L   0x41
+#define EDID_DET_TIMING_STEREO_4WAY_INTRLVD     0x60
+#define EDID_DET_TIMING_STEREO_SIDE_BY_SIDE_INTRLVD    0x61
+#define EDID_DET_TIMING_SIGNAL_ANALOG           0x00
+#define EDID_DET_TIMING_BIPOLAR_COMPOSITE_SYNC  0x08
+#define EDID_DET_TIMING_HSYNC_DURING_VSYNC      0x04
+#define EDID_DET_TIMING_SYNC_ON_GREEN           0x02
+#define EDID_DET_TIMING_SYNC_ON_RGB             0x02
+#define EDID_DET_TIMING_SIGNAL_DIGITAL          0x10
+#define EDID_DET_TIMING_SYNC_SEPARATE           0x08
+#define EDID_DET_TIMING_VSYNC_NEGATIVE          0x00
+#define EDID_DET_TIMING_VSYNC_POSITIVE          0x04
+#define EDID_DET_TIMING_HSYNC_NEGATIVE          0x00
+#define EDID_DET_TIMING_HSYNC_POSITIVE          0x02
+
+#define EDID_DISPLAY_DESCR                      (0x0000)
+
+#define EDID_DISPLAY_DESCR_TAG_SERIAL           0xff
+#define EDID_DISPLAY_DESCR_TAG_STRING           0xfe
+#define EDID_DISPLAY_DESCR_TAG_RANGE_LIMITS     0xfd
+#define EDID_DISPLAY_DESCR_TAG_NAME             0xfc
+#define EDID_DISPLAY_DESCR_TAG_COLOR_POINT      0xfb
+#define EDID_DISPLAY_DESCR_TAG_STD_TIMINGS      0xfa
+#define EDID_DISPLAY_DESCR_TAG_DCM              0xf9
+#define EDID_DISPLAY_DESCR_TAG_CVT_TIMINGS      0xf8
+#define EDID_DISPLAY_DESCR_TAG_EST_TIMINGS      0xf7
+#define EDID_DISPLAY_DESCR_TAG_DUMMY            0x10
+

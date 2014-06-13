@@ -1,0 +1,7 @@
+src/edid-head.h.in
+src/edid-tail.h
+src/prototypes.h
+src/ext_prototypes.h
+src/libedid.c
+src/version.c
+src/project.h
