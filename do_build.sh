@@ -118,9 +118,7 @@ do_oe_setup()
         mkdir -p "$path"
         pushd "$path" > /dev/null
 
-        git_clone "oe" "$OPENXT_GIT_MIRROR/xenclient-oe.git" "$BRANCH" "$ALLOW_SWITCH_BRANCH_FAIL"
-
-        pushd "oe" > /dev/null
+        pushd "xenclient-oe" > /dev/null
 
         echo "*:$BRANCH" > "manifest"
 
