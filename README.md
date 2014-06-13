@@ -6,9 +6,7 @@ into a single repository.
 Dickon was thinking about how to do automated builds and verison control in a way that works for
 multiple organsiations and figured to set this up as a strawman.
 
-So far xenclient-oe has been imported (maintaining the author name) and I'm working
-through the setupoe step trying to rationalise it. The changes to setupoe may be unwise
-but some surgery is required.
+Currently setupoe works and I have initramfs running (but not yet finished).
 
 # Background
 
