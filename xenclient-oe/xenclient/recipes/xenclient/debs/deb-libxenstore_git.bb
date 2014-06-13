@@ -7,7 +7,6 @@ DEPENDS = "${@deb_bootstrap_deps(d)}"
 
 SRC_URI = "${XEN_SRC_URI} \
 	   pq://xen-common-pq"
-"
 
 SRC_URI[md5sum] := "${XEN_SRC_MD5SUM}"
 SRC_URI[sha256sum] := "${XEN_SRC_SHA256SUM}"
