@@ -10,7 +10,6 @@ ENV=0
 VERBOSE=0
 SOURCE=0
 BUILD_USER="`whoami`"
-OE_BB_THREADS="8"
 MISC_DIR="$TOPDIR/build/misc"
 CACHE_DIR="$MISC_DIR/ccache"
 HOME="$MISC_DIR/home"
@@ -18,7 +17,6 @@ export HOME
 # make git not complain about user not being set
 export GIT_AUTHOR_NAME="Build user at `hostname`" 
 OE_BUILD_CACHE="$MISC_DIR/oe"
-OE_BB_THREADS=10
 BRANCH=master
 export HOME
 BUILD_UID=`id -u`
@@ -118,22 +116,16 @@ do_oe_setup()
         mkdir -p "$path"
         pushd "$path" > /dev/null
 
-        oedl="$OE_BUILD_CACHE/oe-download"
         [ "x$OE_BUILD_CACHE_DL" != "x" ] && oedl="$OE_BUILD_CACHE_DL"
 	
 	echo "oedl=$oedl"
         EXTRA_CLASSES=""
         [ "x$INHIBIT_RMWORK" == "x" ] && EXTRA_CLASSES="rm_work $EXTRA_CLASSES"
 
-        if [ ! -f "xenclient/conf/local.conf" ]; then
+	echo "NETBOOT_HTTP_URL is $NETBOOT_HTTP_URL"
+	echo "OE build cache is $OE_BUILD_CACHE"
 
-                if [ ! -z "${OE_TARBALL_MIRROR}" ] ; then
-                cat >> xenclient/conf/local.conf <<EOF
-# Tarball mirror
-PREMIRRORS = "(ftp|https?)$://.*/.*/ ${OE_TARBALL_MIRROR}"
-EOF
-                fi
-                cat >> xenclient/conf/local.conf <<EOF
+            cat >> ${TOPDIR}/build/generated.conf <<EOF
 
 # Distribution feed
 XENCLIENT_PACKAGE_FEED_URI="${NETBOOT_HTTP_URL}/${ORIGIN_BRANCH}/${NAME}/packages/ipk"
@@ -141,28 +133,17 @@ XENCLIENT_PACKAGE_FEED_URI="${NETBOOT_HTTP_URL}/${ORIGIN_BRANCH}/${NAME}/package
 # Local generated configuration for build $ID
 INHERIT += "$EXTRA_CLASSES"
 SSTATE_DIR = "$OE_BUILD_CACHE/oe-sstate/$branch"
-
 DL_DIR = "$oedl"
+
 export CCACHE_DIR = "${CACHE_DIR}"
 CCACHE_TARGET_DIR="$CACHE_DIR"
 
-PARALLEL_MAKE = "-j 8"
-BB_NUMBER_THREADS = "$OE_BB_THREADS"
 OPENXT_MIRROR="$OPENXT_MIRROR"
 OPENXT_GIT_MIRROR="$OPENXT_GIT_MIRROR"
 XENCLIENT_BRANCH="$ORIGIN_BRANCH"
-OPENXT_TAG="$BRANCH"
 
 require conf/xenclient-extra.conf
-EOF
 
-                if [ "x$ID" != "x" ]; then
-                    echo "XENCLIENT_BUILD = \"$ID\"" >> xenclient/conf/local.conf
-                else
-                    echo "XENCLIENT_BUILD = \"$NAME\"" >> xenclient/conf/local.conf
-                fi
-
-                cat >> xenclient/conf/local.conf <<EOF
 XENCLIENT_BUILD_DATE = "`date +'%T %D'`"
 XENCLIENT_BUILD_BRANCH = "${ORIGIN_BRANCH}"
 XENCLIENT_VERSION = "$VERSION"
