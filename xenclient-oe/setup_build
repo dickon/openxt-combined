@@ -111,6 +111,7 @@ if [ "$1" != "env" ]; then
   getgit $REPOS/openembedded-core $OE_CORE_REPO $OE_CORE_TAG
   getgit $REPOS/meta-openembedded $META_OE_REPO $META_OE_TAG
   getgit $REPOS/meta-java $META_JAVA_REPO $META_JAVA_TAG
+  getgit $REPOS/meta-selinux $META_SELINUX_REPO $META_SELINUX_TAG
 fi
 
 BBPATH=$OE_XENCLIENT_DIR/xenclient:$REPOS/openembedded:$OE_XENCLIENT_DIR/oe-addons
