@@ -100,7 +100,7 @@ if [ "$1" != "env" ]; then
 
   getgit $REPOS/bitbake $BITBAKE_REPO $BITBAKE_TAG
   pushd $REPOS/bitbake
-  for p in ../../../xenclient-oe/patches/bitbake/*.patch; do
+  for p in ../../../../xenclient-oe/patches/bitbake/*.patch; do
       if [ ! -f "$p.APPLIED" ]; then
         echo "Applying BitBake patch: $p"
         git apply $p || true

@@ -197,9 +197,9 @@ EOF
 	    OPTS=""
 	fi
 
-	pushd ${TOPDIR}/build
+	pushd ${TOPDIR}/build/oe
 	# TODO: inline setup_build here?
-	../xenclient-oe/setup_build $OPTS
+	../../xenclient-oe/setup_build $OPTS
 	mkdir -p oe/conf
 	if [ ! -e oe/conf/bblayers.conf ]; then
 	    ln -s ../../../xenclient-oe/conf/bblayers.conf oe/conf/bblayers.conf
