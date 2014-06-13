@@ -117,7 +117,7 @@ do_oe_setup()
         EXTRA_CLASSES=""
         [ "x$INHIBIT_RMWORK" == "x" ] && EXTRA_CLASSES="rm_work $EXTRA_CLASSES"
 
-        cat >> ${TOPDIR}/build/generated.conf <<EOF
+        cat >> ${TOPDIR}/build/oe/generated.conf <<EOF
 
 # Distribution feed
 XENCLIENT_PACKAGE_FEED_URI="${NETBOOT_HTTP_URL}/${ORIGIN_BRANCH}/${NAME}/packages/ipk"
@@ -161,7 +161,7 @@ EOF
                 check_repo_signing_file "$REPO_DEV_CACERT_PATH" \
                     "Development repository-signing CA certificate"
 
-                cat >> ${TOPDIR}/build/generated.conf <<EOF
+                cat >> ${TOPDIR}/build/oe/generated.conf <<EOF
 # Production and development repository-signing CA certificates
 REPO_PROD_CACERT="$REPO_PROD_CACERT_PATH"
 REPO_DEV_CACERT="$REPO_DEV_CACERT_PATH"
@@ -170,7 +170,7 @@ EOF
 
                 if [ $SOURCE -eq 1 ]
                 then
-                    cat >> ${TOPDIR}/build/generated.conf <<EOF 
+                    cat >> ${TOPDIR}/build/oe/generated.conf <<EOF 
 
 XENCLIENT_BUILD_SRC_PACKAGES = "1"
 XENCLIENT_COLLECT_SRC_INFO = "1"
@@ -178,7 +178,7 @@ EOF
                 fi
                 if [ "x$FREEZE_URIS" = "xyes" ]
                 then
-                    cat >> ${TOPDIR}/build/generated.conf <<EOF 
+                    cat >> ${TOPDIR}/build/oe/generated.conf <<EOF 
 
 INHERIT += "freezer"
 EOF
@@ -187,7 +187,7 @@ EOF
         if [ $VERBOSE -eq 1 ]
         then
             echo "Generated config is:"
-            cat ${TOPDIR}/build/generated.conf
+            cat ${TOPDIR}/build/oe/generated.conf
         fi
 
 	if [ $VERBOSE -eq 1 ]
@@ -203,6 +203,9 @@ EOF
 	mkdir -p conf
 	if [ ! -e conf/bblayers.conf ]; then
 	    ln -s ../../../xenclient-oe/conf/bblayers.conf conf/bblayers.conf
+	fi
+	if [ ! -e conf/local.conf ]; then
+	    ln -s ../../../local.conf conf/local.conf
 	fi
 	popd
 }
