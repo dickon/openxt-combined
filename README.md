@@ -1,6 +1,11 @@
 This fork of OpenXT is an investigation in to building OpenXT with all the github repos combined
 into a single repository. 
 
+# Status
+
+Dickon was thinking about how to do automated builds and verison control in a way that works for
+multiple organsiations and figured to set this up as a strawman.
+
 # Background
 
 Historically XT was built from 50+ repositories. All developers had push access and
@@ -27,6 +32,22 @@ Multi repository development have some disadvantages:
 
 Since OpenXT has no history the repos are currently quite small (80MB total) and there is a good
 opportunity to move to a single repo format. 
+
+Concerns:
+
+1. Getting OE to pick up source code already checked out.
+2. Name clashes in openxt with a simple mapping to top level directories in this repo.
+3. Integration into buildbot.
+4. Reusable modules may be better done as independent repos.
+5. The repositoriy may be slow to work with.
+
+(4) and (5) can be address by moving some pieces back out as standalone git repos,
+using the facilities in OpenEmbedded for referencing a particular version. Moving them out
+means they no longer get covered by the same pull request.
+
+
+
+
 
 
 
