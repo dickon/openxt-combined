@@ -1,0 +1,8 @@
+Change for v1.1.0
+ - Add a demo application.
+Change for v1.2.0
+ - Prefix all export function/variable/structure... with libpciemu_ to
+ avoid name clash with the application;
+ - Export only the needed functions;
+ - The application need to provide a callback to log message;
+ - Use a single callback for I/O instead of 3.

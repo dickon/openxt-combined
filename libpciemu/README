@@ -1,0 +1,25 @@
+********** Library PCI Emulation Documentation **************
+
+This library contains helpers to simply create a virtual PCI device.
+It's part of device disaggregation and can only be use on the top of XenClient XT
+superior to 3.0.0 for the moment.
+
+* Compilation
+
+42sh> ./configure
+42sh> make
+42sh> make install
+
+* Limitations
+
+For the moment the library is unable to handle:
+  * 64 bits BARs;
+  * status register;
+  * rom;
+  * capabilities
+
+* Demo application
+In order to understand how to use libpciemu, a skeleton was created in app/.
+/!\ This app compile buts doesn't work. it miss synchronisation with the manager.
+
+42sh> make -C app

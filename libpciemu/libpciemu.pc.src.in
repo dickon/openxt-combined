@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libpciemu
+Description: Library PCI emulation
+Version: @VERSION@
+Libs: -L${libdir} -lpciemu @LIBXC_LIB@ @PTHREAD_LIB@
+Cflags: -I${includedir}
