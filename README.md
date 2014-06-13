@@ -26,12 +26,12 @@ Assumption 2 is likely to be problematic in a scaled up operation.
 
 Multi repository development have some disadvantages:
 
-1. Coordinating pull requests and reviews over multiple repositories is problematic.
-2. We need to construct machinery to tag across multiple repositories and to checkout
-   appropriately.
-3. Building OpenXT is not as simple as typing make, since you have to follow lots of steps
+1. Building OpenXT is not as simple as typing make, since you have to follow lots of steps
    and know what's going on with multiple repositories, which is a barrier to getting
    people going.
+2. Coordinating pull requests and reviews over multiple repositories is problematic.
+3. We need to construct machinery to tag across multiple repositories and to checkout
+   appropriately.
 
 # Approach
 
