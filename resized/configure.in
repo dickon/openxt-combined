@@ -1,0 +1,41 @@
+dnl
+dnl Copyright (c) 2010 Citrix Systems, Inc.
+dnl 
+dnl This program is free software; you can redistribute it and/or modify
+dnl it under the terms of the GNU General Public License as published by
+dnl the Free Software Foundation; either version 2 of the License, or
+dnl (at your option) any later version.
+dnl 
+dnl This program is distributed in the hope that it will be useful,
+dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl GNU General Public License for more details.
+dnl 
+dnl You should have received a copy of the GNU General Public License
+dnl along with this program; if not, write to the Free Software
+dnl Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+dnl
+
+AC_PREREQ(2.13)
+AC_INIT(src/resized.c)
+AM_INIT_AUTOMAKE(resized, 0.1)
+
+AC_PROG_CC
+AC_PROG_INSTALL
+
+PACKAGE=resized
+
+PKG_CHECK_MODULES(XRANDR, xrandr >= 1.3 xrender x11)
+AC_SUBST(XRANDR_CFLAGS)
+AC_SUBST(XRANDR_LIBS)
+
+AC_CHECK_HEADER(xs.h, [
+    AC_CHECK_LIB(xenstore, xs_read, XS_LIBS="-lxenstore", AC_MSG_ERROR(xenstore library not found.))
+        ], AC_MSG_ERROR(xenstore headers not found.))
+AC_SUBST(XS_LIBS)
+
+AM_CONFIG_HEADER(src/config.h)
+
+AC_OUTPUT([Makefile
+	   src/Makefile])
+
