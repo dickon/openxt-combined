@@ -1,0 +1,4 @@
+sendsigs
+save-rtc.sh
+umountfs
+halt

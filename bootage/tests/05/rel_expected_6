@@ -1,0 +1,38 @@
+-sysfs
+-udev
+-modutils.sh
+-procps.sh
+-xenclient-config-access
+-cryptdisks
+-mountall.sh
+-populate-volatile.sh
+-devpts.sh
+-hostname.sh
+-networking
+-bootmisc.sh
+-xenclient-config
+-dbus-1
+-xenclient-boot-sound
+-xenclient-disable-cpus
+-xenstored
+-sshd
+-acpid
+-rsyslog
+-xenconsoled
+-dbd
+-xenclient-network
+-rpc-proxy
+-xenclient-ctxusb-daemon
+-xenpmd
+-vgmch-init
+-surfman
+-xmlstore
+-xenclient-input
+-xenmgr
+-disksync
+-uid
+-xenclient-backend-daemon
+-language-sync
+sendsigs before save-rtc.sh
+save-rtc.sh before umountfs
+umountfs before reboot

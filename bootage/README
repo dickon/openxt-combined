@@ -1,0 +1,40 @@
+
+Quick documentation
+-------------------
+
+Format of optional config file /etc/bootage.conf:
+
+script NAME
+dep DEPENDENCY...
+start RUNLEVELS
+stop RUNLEVELS (ignored)
+block RUNLEVELS
+
+For example:
+
+script ssh
+dep network autofs
+start 2 3 4
+
+Blank lines and lines STARTING with # are ignored
+
+Any scripts found in the rcX.d directory but not mentioned, will
+auto-depend on every script with a lower sequence number.
+
+Scripts that have a dep line in the config file will not depend
+on anything not explicitly specified there.
+
+Dependencies that are not to be started will be ignored.
+
+All scripts will be started as soon as their dependencies have
+completed startup.
+
+Scripts that are mentioned in bootage.conf but don't
+exist in rcX.d will be run if the runlevel matches.
+
+Scripts that are blocked will not be run in the listed
+runlevels EXCEPT if a following "start" stanza explicitly
+requests it (now whyever would you want to do that!?)
+
+If a script is mentioned in rcX.d and the config file it
+will be started regardless of any "start" directive.

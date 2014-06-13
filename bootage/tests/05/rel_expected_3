@@ -1,0 +1,55 @@
+xenstored before xenconsoled
+dbus-1 before xenclient-ctxusb-daemon
+xenstored before xenclient-ctxusb-daemon
+dbus-1 before uid
+dbus-1 before xenclient-input
+xenstored before xenclient-input
+dbus-1 before dbd
+dbus-1 before xenmgr
+xenstored before xenmgr
+dbus-1 before rpc-proxy
+xenstored before rpc-proxy
+dbus-1 before xmlstore
+xenstored before xmlstore
+xenmgr before xenclient-backend-daemon
+xenmgr before language-sync
+dbus-1 before language-sync
+dbus-1 before disksync
+xenstored before disksync
+dbd before disksync
+microcode_ctl before cron
+cron before xcpmd
+xcpmd before updatemgr
+updatemgr before rmnologin
+-mountall.sh
+-autorelabel
+-bootmisc.sh
+-cryptdisks
+-devpts.sh
+-finish.sh
+-functions
+-halt
+-hostname.sh
+-hwclock.sh
+-modutils.sh
+-network-daemon
+-network-slave
+-networking
+-populate-volatile.sh
+-ppp
+-procps.sh
+-reboot
+-rsyslog
+-save-rtc.sh
+-sendsigs
+-single
+-surfman
+-sysfs.sh
+-trousers
+-udev
+-udev-settle
+-umountfs
+-urandom
+-xenclient-config
+-xenclient-config-access
+-xenclient-disable-cpus
