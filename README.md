@@ -1,6 +1,10 @@
 This fork of OpenXT is an investigation in to building OpenXT with all the github repos combined
 into a single repository. 
 
+# Build instructions
+
+./do_build.sh
+
 # Status
 
 Dickon was thinking about how to do automated builds and verison control in a way that works for
