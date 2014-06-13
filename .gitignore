@@ -3,3 +3,4 @@ build/*
 build-output/*
 /linux-3.11-pq/master/status
 ipxe-pq/master/status
+ipxe-pq/make-guilt-happy
