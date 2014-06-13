@@ -1,0 +1,235 @@
+diff --git a/libfakeroot.c b/libfakeroot.c
+index 68a95fb..15ec7a3 100644
+--- a/libfakeroot.c
++++ b/libfakeroot.c
+@@ -756,6 +756,203 @@ int WRAP_FSTATAT64 FSTATAT64_ARG(int ver,
+ */
+ /*************************************************************/
+ 
++static const char xattr_prefix[] = "user.fakeroot.";
++
++static char *xattr_wrap_name(const char *name) 
++{
++  char *ret = malloc(sizeof(xattr_prefix) + strlen(name));
++
++  if (!ret) {
++	errno = ENOMEM;
++	return NULL;
++  }
++
++  strcpy(ret, xattr_prefix);
++  strcat(ret, name);
++
++  return ret;
++}
++
++ssize_t getxattr(const char *path, const char *name, void *value, size_t size)
++{
++  ssize_t ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_getxattr(path, new_name, value, size);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++ssize_t lgetxattr(const char *path, const char *name, void *value, size_t size)
++{
++  ssize_t ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_lgetxattr(path, new_name, value, size);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++ssize_t fgetxattr (int fd, const char *name, void *value, size_t size)
++{
++  ssize_t ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_fgetxattr(fd, new_name, value, size);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++
++int setxattr(const char *path, const char *name, void *value, size_t size, int flags)
++{
++  int ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_setxattr(path, new_name, value, size, flags);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++int lsetxattr(const char *path, const char *name, void *value, size_t size, int flags)
++{
++  int ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_lsetxattr(path, new_name, value, size, flags);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++int fsetxattr (int fd, const char *name, void *value, size_t size, int flags)
++{
++  int ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_fsetxattr(fd, new_name, value, size, flags);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++int removexattr(const char *path, const char *name)
++{
++  int ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_removexattr(path, new_name);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++int lremovexattr(const char *path, const char *name)
++{
++  int ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_lremovexattr(path, new_name);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++int fremovexattr (int fd, const char *name)
++{
++  int ret = -1;
++  char *new_name = xattr_wrap_name(name);
++  
++  if (new_name)  {
++  	ret = next_fremovexattr(fd, new_name);
++	free(new_name);
++  }
++
++  return ret;
++}
++
++ssize_t xattr_unwrap_list(char *src, ssize_t src_len)
++{
++  int dst_len = 0;
++  char *dst = src;
++
++  while (src_len) {
++    if (strncmp(src, xattr_prefix, sizeof(xattr_prefix) - 1)) {
++      /* this isn't one of our labels - skip it */
++      while (*src) {
++        src++;
++        src_len--;
++      }
++
++      src++;
++      src_len--;
++    } else {
++      /* this is one of ours - hack off the front and copy it */
++      src += sizeof(xattr_prefix) - 1;
++      src_len -= sizeof(xattr_prefix) - 1;
++      
++      while (*src) {
++        *(dst++) = *(src++);
++        src_len--;
++	dst_len++;
++      }
++
++      *(dst++) = *(src++);
++      src_len--;
++      dst_len++;
++    }
++  }
++
++  return dst_len;
++}
++
++
++ssize_t listxattr (const char *path, char *list, size_t size)
++{
++  ssize_t ret = next_listxattr(path, list, size);
++
++  if (ret < 0) return ret;
++
++  return xattr_unwrap_list(list, ret);
++}
++
++ssize_t llistxattr (const char *path, char *list, size_t size)
++{
++  ssize_t ret = next_llistxattr(path, list, size);
++
++  if (ret < 0) return ret;
++
++  return xattr_unwrap_list(list, ret);
++}
++
++ssize_t flistxattr (int fd, char *list, size_t size)
++{
++  ssize_t ret = next_flistxattr(fd, list, size);
++
++  if (ret < 0) return ret;
++
++  return xattr_unwrap_list(list, ret);
++}
+ 
+ 
+ /* chown, lchown, fchown, chmod, fchmod, mknod functions
+diff --git a/wrapfunc.inp b/wrapfunc.inp
+index 5629b0f..da6e2b6 100644
+--- a/wrapfunc.inp
++++ b/wrapfunc.inp
+@@ -77,6 +77,22 @@ WRAP_MKNODAT;int;MKNODAT_ARG(int ver, int dir_fd, const char *pathname, mode_t m
+ /*readlink;READLINK_RETVAL_TYPE;(const char *path, READLINK_BUF_TYPE *buf, READLINK_BUFSIZE_TYPE bufsize);(path, buf, bufsize)*/
+ /*telldir;off_t;(DIR *dir);(dir)*/
+ 
++getxattr;ssize_t;(const char *path, const char *name, void *value, size_t size);(path,name,value,size)
++lgetxattr;ssize_t;(const char *path, const char *name, void *value, size_t size);(path,name,value,size)
++fgetxattr;ssize_t;(int fd, const char *name, void *value, size_t size);(fd,name,value,size)
++
++setxattr;int;(const char *path, const char *name, void *value, size_t size, int flags);(path,name,value,size,flags)
++lsetxattr;int;(const char *path, const char *name, void *value, size_t size, int flags);(path,name,value,size,flags)
++fsetxattr;int;(int fd, const char *name, void *value, size_t size, int flags);(fd,name,value,size,flags)
++
++removexattr;int;(const char *path, const char *name);(path,name)
++lremovexattr;int;(const char *path, const char *name);(path,name)
++fremovexattr;int;(int fd, const char *name);(fd,name)
++
++listxattr;ssize_t;(const char *path, char *list, size_t size);(path,list,size)
++llistxattr;ssize_t;(const char *path, char *list, size_t size);(path,list,size)
++flistxattr;ssize_t;(int fd, char *list, size_t size);(fd,list,size)
++
+ chown;int;(const char *path, uid_t owner, gid_t group);(path, owner, group)
+ lchown;int;(const char *path, uid_t owner, gid_t group);(path, owner, group)
+ fchown;int;(int fd, uid_t owner, gid_t group);(fd, owner, group)

@@ -1,0 +1,126 @@
+/*
+ * budgetvhd.h.in:
+ *
+ * Copyright (c) 2012 James McKenzie <20@madingley.org>,
+ * All rights reserved.
+ *
+ */
+
+/*
+ * $Id:$
+ */
+
+/*
+ * $Log:$
+ *
+ */
+
+/* MAKE ABSOLUTELY SURE THAT YOU ARE EDITING THE budgetvhd-head.h.in */
+/* FILE FROM WHICH THIS IS GENERATED - OTHERWISE YOUR EDITS */
+/* WILL BE LOST */
+
+#ifndef __BUDGETBVHD_H__
+#define __BUDGETBVHD_H__
+
+#ifdef __cplusplus
+extern "C" { 
+#endif
+
+#include <stdio.h>
+
+/*the integer constants here are set by configure*/
+
+/*get uint32_t and friends defined */
+#if @I2_HAVE_STDINT_H@
+#include <stdint.h>
+#elif @I2_HAVE_SYS_INT_TYPES_H@
+#include <sys/int_types.h>
+#endif
+#if @I2_HAVE_UNISTD_H@
+#include <unistd.h>
+#endif
+
+/* If the following is <> then configure failed to find where */
+/* struct tm was defined - report it as a bug */
+
+/*get struct tm defined*/
+#include <@I2_TM_H@>
+
+typedef struct BVHD_struct BVHD;
+
+typedef struct
+{
+  uint8_t uuid[8];
+} bvhd_uuid;
+
+typedef struct
+{
+  uint8_t locator[8];
+} bvhd_locator;
+
+typedef struct
+{
+  uint8_t cookie[8];
+  uint64_t data_offset;
+  uint64_t table_offset;
+  uint32_t header_version;
+  uint32_t max_table_entries;
+  uint32_t block_size;
+  uint32_t checksum;
+  bvhd_uuid parent_unique_id;
+  uint32_t parent_time_stamp;
+  uint32_t reserved1;
+  uint16_t parent_name[256];
+  bvhd_locator parent_locator[8];
+  uint8_t reserved2[256];
+} bvhd_header;
+
+typedef struct
+{
+  uint16_t cylinders;
+  uint8_t heads;
+  uint8_t sectors;
+} bvhd_geometry;
+
+
+typedef struct
+{
+  uint8_t cookie[8];
+  uint32_t features;
+  uint32_t file_format_version;
+  uint64_t data_offset;
+  uint32_t time_stamp;
+  uint8_t creator_application[4];
+  uint32_t creator_version;
+  uint32_t creator_host_os;
+  uint64_t original_size;
+  uint64_t current_size;
+  bvhd_geometry disk_geometry;
+  uint32_t disk_type;
+  uint32_t checksum;
+  bvhd_uuid unique_id;
+  uint8_t saved_state;
+  uint8_t reserved[427];
+} bvhd_footer;
+
+#define BVHD_COOKIE "conectix"
+#define BVHD_COOKIE2 "cxsparse"
+#define BVHD_COOKIE_LEN 8
+
+#define BVHD_FEATURES_TEMPORARY 0x1
+#define BVHD_FEATURES_RESERVED  0x2
+
+#define BVHD_FILE_FORMAT_VERSION 0x0010000
+
+#define BVHD_CREATOR_HOST_OS_WINDOWS 0x5769326B
+#define BVHD_CREATOR_HOST_OS_MACINTOSH 0x4D616320
+
+#define BVHD_DISK_TYPE_NONE	0
+#define BVHD_DISK_TYPE_FIXED_HARD_DISK	2
+#define BVHD_DISK_TYPE_DYNAMIC_HARD_DISK 3
+#define BVHD_DISK_TYPE_DIFFERENCING_HARD_DISK 4
+
+#define BVHD_HEADER_VERSION 0x00010000
+
+
+

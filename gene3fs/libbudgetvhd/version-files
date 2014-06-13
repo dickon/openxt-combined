@@ -1,0 +1,7 @@
+src/budgetvhd-head.h.in
+src/budgetvhd-tail.h
+src/prototypes.h
+src/ext_prototypes.h
+src/libbudgetvhd.c
+src/version.c
+src/project.h
