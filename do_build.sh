@@ -1246,6 +1246,8 @@ do_xctools_win()
     pushd "$path"
     
             rm -rf "xc-tools.iso"
+	    echo "Windows build output ${WIN_BUILD_OUTPUT}"
+	    exit 1
  	    rsync -r -v --progress "${WIN_BUILD_OUTPUT}/" ./
 
             local xct="$OUTPUT_DIR/$NAME/raw"
