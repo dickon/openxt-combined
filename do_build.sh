@@ -118,7 +118,8 @@ do_oe_setup()
         EXTRA_CLASSES=""
         [ "x$INHIBIT_RMWORK" == "x" ] && EXTRA_CLASSES="rm_work $EXTRA_CLASSES"
 
-        cat >> ${TOPDIR}/build/oe/generated.conf <<EOF
+        if [ ! -f "${TOPDIR}/build/oe/generated.conf" ]; then
+            cat >> ${TOPDIR}/build/oe/generated.conf <<EOF
 
 # Distribution feed
 XENCLIENT_PACKAGE_FEED_URI="${NETBOOT_HTTP_URL}/${ORIGIN_BRANCH}/${NAME}/packages/ipk"
@@ -184,7 +185,7 @@ EOF
 INHERIT += "freezer"
 EOF
                 fi
-
+	fi
         if [ $VERBOSE -eq 1 ]
         then
             echo "Generated config is:"
