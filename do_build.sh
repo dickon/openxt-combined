@@ -11,7 +11,7 @@ VERBOSE=0
 SOURCE=0
 BUILD_USER="`whoami`"
 OE_BB_THREADS="8"
-MISC_DIR="$TOPDIR/misc"
+MISC_DIR="$TOPDIR/build/misc"
 CACHE_DIR="$MISC_DIR/ccache"
 HOME="$MISC_DIR/home"
 export HOME
@@ -118,38 +118,14 @@ do_oe_setup()
         mkdir -p "$path"
         pushd "$path" > /dev/null
 
-        pushd "xenclient-oe" > /dev/null
-
-        echo "*:$BRANCH" > "manifest"
-
-        if [ ! -f "local.settings" ]; then
-                cat > local.settings <<EOF
-META_SELINUX_REPO=$OPENXT_GIT_MIRROR/meta-selinux.git
-EXTRA_REPO=$OPENXT_GIT_MIRROR/xenclient-oe-extra.git
-EXTRA_DIR=extra
-EXTRA_TAG="$BRANCH"
-EOF
-
-                if [ "$OE_GIT_MIRROR" ] ; then
-                        cat >> local.settings <<EOF
-BITBAKE_REPO=$OE_GIT_MIRROR/bitbake.git
-OE_CORE_REPO=$OE_GIT_MIRROR/openembedded-core.git
-META_OE_REPO=$OE_GIT_MIRROR/meta-openembedded.git
-META_JAVA_REPO=$OE_GIT_MIRROR/meta-java.git
-EOF
-                fi
-        fi
-
-        [ "x$ORIGIN_BRANCH" != "x" ] && branch="$ORIGIN_BRANCH"
-
         oedl="$OE_BUILD_CACHE/oe-download"
         [ "x$OE_BUILD_CACHE_DL" != "x" ] && oedl="$OE_BUILD_CACHE_DL"
-
+	
+	echo "oedl=$oedl"
         EXTRA_CLASSES=""
         [ "x$INHIBIT_RMWORK" == "x" ] && EXTRA_CLASSES="rm_work $EXTRA_CLASSES"
 
         if [ ! -f "xenclient/conf/local.conf" ]; then
-                cp xenclient/conf/local.conf-dist xenclient/conf/local.conf
 
                 if [ ! -z "${OE_TARBALL_MIRROR}" ] ; then
                 cat >> xenclient/conf/local.conf <<EOF
@@ -251,7 +227,6 @@ EOF
 
 	./setup_build $OPTS
 
-        popd > /dev/null
         popd > /dev/null
 }
 
