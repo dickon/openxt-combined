@@ -112,6 +112,7 @@ do_oe_setup()
 
         mkdir -p "$path"
 
+	oedl=${TOPDIR}/build/oe/oe-download
         [ "x$OE_BUILD_CACHE_DL" != "x" ] && oedl="$OE_BUILD_CACHE_DL"
 	
         EXTRA_CLASSES=""
