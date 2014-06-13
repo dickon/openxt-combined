@@ -1,0 +1,159 @@
+dnl
+dnl
+dnl configure.in:
+dnl
+dnl Copyright (c) 2012 James McKenzie <20@madingley.org>,
+dnl All rights reserved.
+dnl
+dnl $Id:$
+dnl
+dnl $Log:$
+dnl
+dnl
+dnl
+AC_PREREQ(2.13)
+AC_INIT(src/null.c)
+
+AC_PROG_CC
+AC_SYS_LARGEFILE
+AM_PROG_CC_C_O
+
+
+LIBICBINN_MAJOR_VERSION=1
+LIBICBINN_MINOR_VERSION=0
+LIBICBINN_MICRO_VERSION=0
+
+
+
+LIBICBINN_INTERFACE_VERSION_MIN=$LIBICBINN_MINOR_VERSION
+LIBICBINN_INTERFACE_VERSION_MAX=$LIBICBINN_MINOR_VERSION
+LIBICBINN_INTERFACE_REVISION=1
+
+LIBICBINN_VERSION=$LIBICBINN_MAJOR_VERSION.$LIBICBINN_MINOR_VERSION.$LIBICBINN_MICRO_VERSION
+
+AC_SUBST(LIBICBINN_MAJOR_VERSION)
+AC_SUBST(LIBICBINN_MINOR_VERSION)
+AC_SUBST(LIBICBINN_MICRO_VERSION)
+AC_SUBST(LIBICBINN_VERSION)
+
+AC_SUBST(LIBICBINN_INTERFACE_VERSION_MIN)
+AC_SUBST(LIBICBINN_INTERFACE_VERSION_MAX)
+AC_SUBST(LIBICBINN_INTERFACE_REVISION)
+
+
+LT_RELEASE=$LIBICBINN_MAJOR_VERSION.$LIBICBINN_MINOR_VERSION
+LT_CURRENT=$LIBICBINN_INTERFACE_VERSION_MAX
+LT_REVISION=$LIBICBINN_MICRO_VERSION
+LT_AGE=`expr $LIBICBINN_INTERFACE_VERSION_MAX - $LIBICBINN_INTERFACE_VERSION_MIN`
+
+AC_SUBST(LT_RELEASE)
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+
+VERSION=$LIBICBINN_VERSION
+PACKAGE=libicbinn
+
+AM_INIT_AUTOMAKE($PACKAGE,$VERSION)
+
+AM_PROG_LIBTOOL
+
+AM_CONFIG_HEADER(config.h)
+
+AC_CHECK_PROG(SED,sed,sed)
+
+dnl AC_DEFINE_UNQUOTED(LIBICBINN_MAJOR_VERSION, $LIBICBINN_MAJOR_VERSION)
+dnl AC_DEFINE_UNQUOTED(LIBICBINN_MINOR_VERSION, $LIBICBINN_MINOR_VERSION)
+dnl AC_DEFINE_UNQUOTED(LIBICBINN_MICRO_VERSION, $LIBICBINN_MICRO_VERSION)
+
+AC_CHECK_HEADERS(fcntl.h malloc.h sys/ioctl.h unistd.h)
+AC_CHECK_HEADERS(sys/scsi/impl/uscsi.h scsi/sg.h stdint.h)
+AC_CHECK_HEADERS(sys/int_types.h string.h strings.h)
+AC_CHECK_HEADERS(dirent.h sys/stat.h)
+
+AC_C_INLINE
+AC_C_CONST
+AC_HEADER_TIME
+AC_STRUCT_TM
+AC_CHECK_FUNCS(select strdup strstr)
+
+I2_TM_H=$ac_cv_struct_tm
+
+I2_HAVE_STDINT_H=0
+I2_HAVE_SYS_INT_TYPES_H=0
+if test "$ac_cv_header_sys_int_types_h" = "yes"; then
+	I2_HAVE_SYS_INT_TYPES_H=1
+fi
+if test "$ac_cv_header_stdint_h" = "yes"; then
+	I2_HAVE_STDINT_H=1
+fi
+I2_HAVE_UNISTD_H=0
+if test "$ac_cv_header_unistd_h" = "yes"; then
+	I2_HAVE_UNISTD_H=1
+fi
+
+AC_SUBST(I2_TM_H)
+AC_SUBST(I2_HAVE_STDINT_H)
+AC_SUBST(I2_HAVE_SYS_INT_TYPES_H)
+AC_SUBST(I2_HAVE_UNISTD_H)
+
+
+
+AC_ARG_WITH(v4v,AC_HELP_STRING([--with-v4v],[Force the absence of libv4v to be an error]), [EXPECTING_V4V=true], [EXPECTING_V4V=false])
+
+AC_SUBST(V4V_EXTRA_CFLAGS)
+V4V_EXTRA_CFLAGS=""
+
+PKG_CHECK_MODULES([LIBV4V],[libv4v],[V4V_EXTRA_CFLAGS="-DHAVE_LIBV4V=1"],[ 
+	if ${EXPECTING_V4V}; then
+		AC_ERROR(["No libv4v found and --with-v4v was specificed"])
+	fi
+])
+
+
+
+
+AC_ARG_WITH(xcdbus,AC_HELP_STRING([--with-xcdbus],[Force the absence of libxcdbus to be an error]), [EXPECTING_XCDBUS=true], [EXPECTING_XCDBUS=false])
+
+AC_SUBST(XCDBUS_EXTRA_CFLAGS)
+XCDBUS_EXTRA_CFLAGS=""
+
+PKG_CHECK_MODULES([LIBXCDBUS],[libxcdbus],[
+	XCDBUS_EXTRA_CFLAGS="-DHAVE_LIBXCDBUS=1"
+	HAVE_LIBXCDBUS=true
+],[
+        if ${EXPECTING_XCDBUS}; then
+                AC_ERROR(["No libxcdbus found and --with-xcdbus was specificed"])
+        fi
+	HAVE_LIBXCDBUS=false
+])
+
+AM_CONDITIONAL(HAVE_LIBXCDBUS, $HAVE_LIBXCDBUS)
+
+PKG_CHECK_MODULES([LIBTIRPC],[libtirpc])
+PKG_CHECK_MODULES([DBUS],[dbus-1])
+PKG_CHECK_MODULES([DBUS_GLIB],[dbus-glib-1])
+
+
+AC_ARG_WITH(idldir,AC_HELP_STRING([--with-idldir=PATH],[Path to dbus idl desription files]),
+                IDLDIR=$with_idldir,IDLDIR=/usr/share/idl)
+
+AC_SUBST(IDLDIR)
+AC_SUBST(RPCGEN_TEMPLATES)
+
+AC_CHECK_PROG(XC_RPCGEN,xc-rpcgen,xc-rpcgen)
+AC_CHECK_PROG(RPCGEN,rpcgen,rpcgen)
+AC_CHECK_PROG(CPROTO,cproto,cproto)
+
+
+AC_OUTPUT([Makefile 
+	src/Makefile 
+	src/icbinn-head.h
+	test/Makefile 
+	rpc/Makefile
+	server/Makefile
+	client/Makefile
+	libicbinn.pc.src
+	libicbinn-config.src],
+	[chmod +x libicbinn-config.src])
+

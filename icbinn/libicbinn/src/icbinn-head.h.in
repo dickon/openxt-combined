@@ -1,0 +1,101 @@
+/*
+ * icbinn.h.in:
+ *
+ * Copyright (c) 2012 James McKenzie <20@madingley.org>,
+ * All rights reserved.
+ *
+ */
+
+/*
+ * $Id:$
+ */
+
+/*
+ * $Log:$
+ *
+ */
+
+/* MAKE ABSOLUTELY SURE THAT YOU ARE EDITING THE icbinn-head.h.in */
+/* FILE FROM WHICH THIS IS GENERATED - OTHERWISE YOUR EDITS */
+/* WILL BE LOST */
+
+#ifndef __ICBINN_H__
+#define __ICBINN_H__
+
+#ifdef __cplusplus
+extern "C" { 
+#endif
+
+#include <stdio.h>
+
+/*the integer constants here are set by configure*/
+
+/*get uint32_t and friends defined */
+#if @I2_HAVE_STDINT_H@
+#include <stdint.h>
+#elif @I2_HAVE_SYS_INT_TYPES_H@
+#include <sys/int_types.h>
+#endif
+#if @I2_HAVE_UNISTD_H@
+#include <unistd.h>
+#endif
+
+/* If the following is <> then configure failed to find where */
+/* struct tm was defined - report it as a bug */
+
+/*get struct tm defined*/
+#include <@I2_TM_H@>
+
+
+
+#define ICBINN_PORT 4878
+#define ICBINN_MAXPATHLEN 4096
+#define ICBINN_MAXNAMELEN 1024
+#define ICBINN_MAXDATA 65536
+#define ICBINN_FHSIZE 32
+
+#define ICBINN_RDONLY 0
+#define ICBINN_WRONLY 1
+#define ICBINN_RDWR 2
+
+#define ICBINN_CREAT 0100
+#define ICBINN_TRUNC 01000
+
+/* FIXME: test these match */
+#define ICBINN_LTYPE_RDLCK 0
+#define ICBINN_LTYPE_WRLCK 1
+#define ICBINN_LTYPE_UNLCK 2
+
+
+#define ICBINN_TYPE_FILE 0
+#define ICBINN_TYPE_DIRECTORY 1
+#define ICBINN_TYPE_LINK 2
+#define ICBINN_TYPE_UNKNOWN 3
+
+#define ICBINN_RANDOM 0
+#define ICBINN_URANDOM 1
+
+struct ICBINN_struct;
+
+typedef struct ICBINN_struct ICBINN;
+
+struct icbinn_stat {
+	uint64_t size;
+	int type;
+};
+
+struct icbinn_statfs {
+	uint64_t bsize;
+	uint64_t blocks;
+	uint64_t bfree;
+	uint64_t bavail;
+};
+
+struct icbinn_dirent
+{
+  char name[ICBINN_MAXNAMELEN + 1];
+  int type;
+};
+
+
+

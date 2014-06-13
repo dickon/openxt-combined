@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libicbinn_resolved
+Description: libicbinn_resolved
+Requires: 
+Version: %VERSION%
+Libs: -L${libdir} -licbinn_resolved -ldl
+Cflags: -I${includedir} @LIBICBINN_CFLAGS@ 
