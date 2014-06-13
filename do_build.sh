@@ -198,7 +198,10 @@ EOF
 	    OPTS=""
 	fi
 
-	./setup_build $OPTS
+	pushd ${TOPDIR}/build
+	# TODO: inline setup_build here?
+	../xenclient-oe/setup_build $OPTS
+	popd
 }
 
 check_repo_signing_file()
