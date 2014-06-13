@@ -22,9 +22,6 @@ export HOME
 BUILD_UID=`id -u`
 export BUILD_UID
 
-# TODO: move some of the above definitions into common-config
-
-source ${CMD_DIR}/common-config
 source ${CMD_DIR}/build_helpers.sh
 
 create_ramdisk()
@@ -114,7 +111,6 @@ do_oe_setup()
         local branch="$BRANCH"
 
         mkdir -p "$path"
-        pushd "$path" > /dev/null
 
         [ "x$OE_BUILD_CACHE_DL" != "x" ] && oedl="$OE_BUILD_CACHE_DL"
 	
@@ -122,10 +118,7 @@ do_oe_setup()
         EXTRA_CLASSES=""
         [ "x$INHIBIT_RMWORK" == "x" ] && EXTRA_CLASSES="rm_work $EXTRA_CLASSES"
 
-	echo "NETBOOT_HTTP_URL is $NETBOOT_HTTP_URL"
-	echo "OE build cache is $OE_BUILD_CACHE"
-
-            cat >> ${TOPDIR}/build/generated.conf <<EOF
+        cat >> ${TOPDIR}/build/generated.conf <<EOF
 
 # Distribution feed
 XENCLIENT_PACKAGE_FEED_URI="${NETBOOT_HTTP_URL}/${ORIGIN_BRANCH}/${NAME}/packages/ipk"
@@ -169,7 +162,7 @@ EOF
                 check_repo_signing_file "$REPO_DEV_CACERT_PATH" \
                     "Development repository-signing CA certificate"
 
-                cat >> xenclient/conf/local.conf <<EOF
+                cat >> ${TOPDIR}/build/generated.conf <<EOF
 # Production and development repository-signing CA certificates
 REPO_PROD_CACERT="$REPO_PROD_CACERT_PATH"
 REPO_DEV_CACERT="$REPO_DEV_CACERT_PATH"
@@ -178,7 +171,7 @@ EOF
 
                 if [ $SOURCE -eq 1 ]
                 then
-                    cat >> xenclient/conf/local.conf <<EOF 
+                    cat >> ${TOPDIR}/build/generated.conf <<EOF 
 
 XENCLIENT_BUILD_SRC_PACKAGES = "1"
 XENCLIENT_COLLECT_SRC_INFO = "1"
@@ -186,17 +179,16 @@ EOF
                 fi
                 if [ "x$FREEZE_URIS" = "xyes" ]
                 then
-                    cat >> xenclient/conf/local.conf <<EOF 
+                    cat >> ${TOPDIR}/build/generated.conf <<EOF 
 
 INHERIT += "freezer"
 EOF
                 fi
-        fi
 
         if [ $VERBOSE -eq 1 ]
         then
             echo "Generated config is:"
-            cat xenclient/conf/local.conf
+            cat ${TOPDIR}/build/generated.conf
         fi
 
 	if [ $VERBOSE -eq 1 ]
@@ -207,8 +199,6 @@ EOF
 	fi
 
 	./setup_build $OPTS
-
-        popd > /dev/null
 }
 
 check_repo_signing_file()
