@@ -114,7 +114,6 @@ do_oe_setup()
 
         [ "x$OE_BUILD_CACHE_DL" != "x" ] && oedl="$OE_BUILD_CACHE_DL"
 	
-	echo "oedl=$oedl"
         EXTRA_CLASSES=""
         [ "x$INHIBIT_RMWORK" == "x" ] && EXTRA_CLASSES="rm_work $EXTRA_CLASSES"
 
