@@ -1,7 +1,7 @@
 # classs to handle XC Git repositories (and replace old repo class)
 
 def is_xc_repo(url, d):
-    if url.startswith('pq://'): 
+    if url.startswith('pq://') or url.startswith('lndir://') or url.startswith('copy://'):
         return True
     xc_repo_prefix = bb.data.getVar("OPENXT_GIT_MIRROR", d, True)
     return url.startswith(xc_repo_prefix)
@@ -40,11 +40,18 @@ python do_unpack_xc_repos() {
     xc_repos = get_xc_repos(d)
     for repo in xc_repos:
         workdir = bb.data.getVar("WORKDIR", d, True)
+	topdir = bb.data.getVar("TOPDIR", d, True)
+	topsegs = len(topdir.split('/'))  
+	worksegs = len(workdir.split('/'))
+        reltop = '../'*(2+worksegs-topsegs)
         if repo.startswith('pq://'):
-            topdir = bb.data.getVar("TOPDIR", d, True)
-	    topsegs = len(topdir.split('/'))  
-	    worksegs = len(workdir.split('/'))
-            runfetchcmd("ln -s %s%s %s/patchqueue" % ('../'*(2+worksegs - topsegs), repo[5:], workdir), d)
+            runfetchcmd("ln -s %s%s %s/patchqueue" % (reltop, repo[5:], workdir), d)
+	    continue
+        if repo.startswith('lndir://'):
+            runfetchcmd("lndir -s %s%s %s/git" % (reltop, repo[5:], workdir), d)
+	    continue
+        if repo.startswith('copy://'):
+            runfetchcmd("cp -r %s%s/ %s/git" % (reltop, repo[5:], workdir), d)
 	    continue
         (type_, host, path, user, pswd, parm) = bb.decodeurl(bb.data.expand(repo, d))
         if parm.has_key("destsuffix"):
