@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=8ca43cbc842c2336e835926c2166c28b"
 SRCREV = "8d038040eaac85bbe08f0b5ba507ff0167b3a2f3"
 
 SRC_URI = "git://git.ipxe.org/ipxe.git \
-           ${OPENXT_GIT_MIRROR}/ipxe-pq.git;protocol=git;tag=${OPENXT_TAG} \
+           pq://ipxe-pq  \
           "
 
 S = "${WORKDIR}/git"
