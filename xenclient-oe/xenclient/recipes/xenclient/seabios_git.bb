@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504      \
                     file://COPYING.LESSER;md5=6a6a8e020838b23406c81b19c1d46df6"
 
 SRC_URI = "copy://seabios \
-           pq://seabios-pq \
+	   pq://seabios-pq \
            file://defconfig \
           "
 

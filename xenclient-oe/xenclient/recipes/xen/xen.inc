@@ -4,8 +4,8 @@ inherit xenclient-pq
 PV = "${XEN_VERSION}"
 
 SRC_URI = "${XEN_SRC_URI} \
-	   ${OPENXT_GIT_MIRROR}/xen-common-pq.git;protocol=git;tag=${OPENXT_TAG} \
-"
+	   pq://xen-common-pq.git"
+
 
 SRC_URI[md5sum] := "${XEN_SRC_MD5SUM}"
 SRC_URI[sha256sum] := "${XEN_SRC_SHA256SUM}"
