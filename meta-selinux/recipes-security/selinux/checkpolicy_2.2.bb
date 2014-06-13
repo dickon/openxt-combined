@@ -1,0 +1,9 @@
+PR = "r0"
+
+include selinux_20131030.inc
+include ${BPN}.inc
+
+LIC_FILES_CHKSUM = "file://COPYING;md5=393a5ca445f6965873eca0259a17f833"
+
+SRC_URI[md5sum] = "9662eaa1163de67cf3d392b58d262552"
+SRC_URI[sha256sum] = "9ff6698f4d4cb59c9c916e348187d533ada4107f90c253ef7304905934e9adf8"
