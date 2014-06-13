@@ -92,8 +92,6 @@ getgit() {
 OE_XENCLIENT_DIR=`pwd`
 export OE_XENCLIENT_DIR
 
-[ -f "$OE_XENCLIENT_DIR/setup_build" ] || die "Please run this script from the root of the xenclient-oe repository"
-
 [ -f "$OE_XENCLIENT_DIR/local.settings" ] && . "$OE_XENCLIENT_DIR/local.settings"
 
 REPOS=$OE_XENCLIENT_DIR/repos
