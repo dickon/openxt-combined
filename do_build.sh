@@ -252,7 +252,7 @@ do_oe()
         export MACHINE="$machine"
         if [ "x$FREEZE_URIS" = "xyes" ]; then
             echo "Running URI freezer"
-             < /dev/null ./bb --disable-wrapper -c freezeall "$image" | do_oe_log
+             < /dev/null ${TOPDIR}/xenclient-oe/bb --disable-wrapper -c freezeall "$image" | do_oe_log
             # kill the cache
             rm -fr tmp-eglibc/cache
         fi
@@ -264,7 +264,7 @@ do_oe()
 	fi
 	echo "STARTING OE BUILD $image $machine, started at" `date -u +'%H:%M:%S UTC'`
 
-         < /dev/null ./bb $BBFLAGS "$image" | do_oe_log
+         < /dev/null ${TOPDIR}/xenclient-oe/bb $BBFLAGS "$image" | do_oe_log
         popd
 
         if [ -z "${dont_get_log}" -a -z "${NEVER_GET_LOG}" ] ; then
