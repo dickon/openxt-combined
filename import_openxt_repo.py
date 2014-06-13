@@ -13,8 +13,8 @@ try:
     check_call(['mkdir', '-p', repo])
     check_call(['rsync', '-rE', '--exclude', '.git', workd+'/', repo])
     check_call(['git', 'add', repo])
-    name = check_output(['git', 'config', 'user.name'])
-    email = check_output(['git', 'config', 'user.email'])
+    name = check_output(['git', 'config', 'user.name']).strip()
+    email = check_output(['git', 'config', 'user.email']).strip()
     try:
         check_call(['git', 'config', 'user.name', 'Open XT'])
         check_call(['git', 'config', 'user.email', 'openxtprime@gmail.com'])
