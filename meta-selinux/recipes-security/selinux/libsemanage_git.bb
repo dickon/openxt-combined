@@ -1,5 +1,5 @@
 PR = "r0"
-PV = "2.2+git${SRCPV}"
+PV = "2.1.10+git${SRCPV}"
 
 include selinux_git.inc
 include ${BPN}.inc
@@ -11,5 +11,4 @@ SRC_URI += "\
 	file://libsemanage-fix-path-len-limit.patch \
 	file://libsemanage-fix-path-nologin.patch \
 	file://libsemanage-drop-Wno-unused-but-set-variable.patch \
-	file://libsemanage-define-FD_CLOEXEC-as-necessary.patch;striplevel=2 \
 	"

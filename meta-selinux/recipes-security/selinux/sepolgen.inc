@@ -17,18 +17,3 @@ generating policy based on required access."
 SECTION = "base"
 LICENSE = "LGPLv2+"
 
-FILES_${PN} = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
-
-DEPENDS += "python"
-
-FILES_${PN} += "${libdir}/python${PYTHON_BASEVERSION}/site-packages \
-		/var/lib/sepolgen"
-
-do_install() {
-	oe_runmake DESTDIR=${D} \
-			PYTHONLIBDIR='${libdir}/python${PYTHON_BASEVERSION}/site-packages' \
-			install
-}
-
-BBCLASSEXTEND = "native"
-

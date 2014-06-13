@@ -7,7 +7,7 @@ decisions.  Required for any applications that use the SELinux API."
 SECTION = "base"
 LICENSE = "PD"
 
-inherit lib_package pythonnative
+inherit lib_package
 
 DEPENDS += "libsepol python libpcre swig-native"
 

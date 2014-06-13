@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f \
 SRC_URI = "http://people.redhat.com/sgrubb/libcap-ng/libcap-ng-${PV}.tar.gz \
 	   file://python.patch"
 
-inherit lib_package autotools pythonnative
+inherit lib_package autotools
 
 SRC_URI[md5sum] = "610afb774f80a8032b711281df126283"
 SRC_URI[sha256sum] = "5ca441c8d3a1e4cfe8a8151907977662679457311ccaa7eaac91447c33a35bb1"

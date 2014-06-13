@@ -1,4 +1,4 @@
-PRINC = "1"
+PRINC = "3"
 
 SUMMARY = "SELinux policy core utilities"
 DESCRIPTION = "policycoreutils contains the policy core utilities that are required \
@@ -109,11 +109,10 @@ RDEPENDS_${BPN}-setsebool += "\
 	libsemanage \
 "
 RDEPENDS_${BPN} += "setools setools-libs ${BPN}-python"
+RPROVIDES_${BPN} += "${PACKAGES}"
 
 WARN_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${WARN_QA}', d)}"
 ERROR_QA := "${@oe_filter_out('unsafe-references-in-scripts', '${ERROR_QA}', d)}"
-
-inherit pythonnative
 
 PACKAGES =+ "\
 	${PN}-audit2allow \
@@ -176,7 +175,7 @@ FILES_${PN}-sandbox += "\
 FILES_${PN}-secon += "${bindir}/secon"
 FILES_${PN}-semanage = "\
 	${sbindir}/semanage \
-	${datadir}/bash-completion/completions/semanage \
+	${sysconfdir}/bash_completion.d/semanage-bash-completion.sh \
 "
 FILES_${PN}-semodule += "${sbindir}/semodule"
 FILES_${PN}-semodule-deps += "${bindir}/semodule_deps"
@@ -188,9 +187,7 @@ FILES_${PN}-semodule-package += "\
 "
 FILES_${PN}-sepolicy += "\
 	${bindir}/sepolicy \
-	${datadir}/bash-completion/completions/sepolicy \
-	${datadir}/dbus-1/system-services/org.selinux.service \
-	${datadir}/polkit-1/actions/org.selinux.policy \
+	${sysconfdir}/bash_completion.d/sepolicy-bash-completion.sh \
 "
 FILES_${PN}-sepolgen-ifgen += "\
 	${bindir}/sepolgen-ifgen \
@@ -206,13 +203,11 @@ FILES_${PN}-setfiles += "\
 "
 FILES_${PN}-setsebool += "\
 	${sbindir}/setsebool \
-	${datadir}/bash-completion/completions/setsebool \
+	${sysconfdir}/bash_completion.d/setsebool-bash-completion.sh \
 "
 FILES_system-config-selinux = " \
     ${bindir}/sepolgen \
     ${datadir}/system-config-selinux/* \
-    ${datadir}/icons/hicolor/24x24/apps/system-config-selinux.png \
-    ${datadir}/polkit-1/actions/org.selinux.config.policy \
 "
 
 export STAGING_INCDIR

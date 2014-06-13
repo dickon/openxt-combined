@@ -12,7 +12,7 @@ DEPENDS = "libpcre python"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/${BPN}/${BPN}-${PV}.tar.gz"
 
-inherit autotools pythonnative
+inherit autotools
 
 EXTRA_OECONF = " \
     --with-python=${PYTHON} \
