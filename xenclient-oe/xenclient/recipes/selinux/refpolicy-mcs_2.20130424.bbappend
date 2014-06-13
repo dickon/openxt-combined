@@ -1,9 +1,8 @@
 FILESEXTRA := "${THISDIR}/${PN}"
 FILESEXTRAPATHS_prepend := "${FILESEXTRA}:"
 
-SRC_URI += " \
-	   ${OPENXT_GIT_MIRROR}/refpolicy-xt-pq;protocol=git;tag=${OPENXT_TAG} \
-	   ${OPENXT_GIT_MIRROR}/selinux-policy.git;protocol=git;tag=${OPENXT_TAG} \
+SRC_URI += "lndir://selinux-policy \
+	   pq:///refpolicy-xt-pq \
 	   file://config \
 "
 
