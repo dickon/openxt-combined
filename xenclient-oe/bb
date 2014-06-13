@@ -18,7 +18,7 @@
 #
 
 BDIR=`readlink -f \`dirname $0\``
-REPOS="$BDIR/repos"
+REPOS="$BDIR/../build/repos"
 
 export BB_ENV_EXTRAWHITE="MACHINE BUILD_UID"
 PATH="$REPOS/bitbake/bin:$PATH"
