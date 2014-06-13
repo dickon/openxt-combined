@@ -99,15 +99,15 @@ if [ "$1" != "env" ]; then
   mkdir -p $REPOS || die "Could not create local build dir"
 
   getgit $REPOS/bitbake $BITBAKE_REPO $BITBAKE_TAG
-  for p in `pwd`/patches/bitbake/*.patch; do
+  pushd $REPOS/bitbake
+  for p in ../../../xenclient-oe/patches/bitbake/*.patch; do
       if [ ! -f "$p.APPLIED" ]; then
         echo "Applying BitBake patch: $p"
-	pushd $REPOS/bitbake
         git apply $p || true
-	popd
 	touch "$p.APPLIED"
       fi
   done
+  popd
   getgit $REPOS/openembedded-core $OE_CORE_REPO $OE_CORE_TAG
   getgit $REPOS/meta-openembedded $META_OE_REPO $META_OE_TAG
   getgit $REPOS/meta-java $META_JAVA_REPO $META_JAVA_TAG
