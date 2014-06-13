@@ -60,6 +60,26 @@ means they no longer get covered by the same pull request.
 
 
 
+# Alternatives
+
+## Version vectors
+
+Builds could work out the set of source URLs and revisions of other repos they intend to use and store
+this is the build output, along with the revision of openxt.git, in what I'll call
+a version vector. During the build the revisions from the URLs specified in the version vector would be
+checked out.
+
+To reproduce a build the version vector could be copied into a new build tree.
+
+Issues:
+
+1. The version vector cannot be derived from a source code version, and so requires interpreting
+   when it is necessary to talk about what to take.
+
+## Centralised tagging
+
+We could maintain the current tagging system, making the tags available alongside the build. 
+
 
 
 
