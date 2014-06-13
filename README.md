@@ -22,8 +22,8 @@ that was being used for that build, which allowed a record of the code that went
 
 That approach has some assumptions:
 
-1. That centralised builds had write access to that branch. 
-2. That there was a single set of repositories that contained all the branches that can be
+1. That centralised builds have write access to the repos they build.
+2. That there was a single set of repositories that contain all the branches that can be
    built automatically.
 3. That people understand the multiple repository approach and tagging system, which is 
    complex and unusual.
@@ -50,7 +50,9 @@ Concerns:
 2. Name clashes in openxt with a simple mapping to top level directories in this repo.
 3. Integration into buildbot.
 4. Reusable modules may be better done as independent repos.
-5. The repositoriy may be slow to work with.
+5. The repository may be slow to work with.
+6. The openXT repo will have multiple license types in it.
+7. It is a big change over previous development approaches.
 
 (4) and (5) can be address by moving some pieces back out as standalone git repos,
 using the facilities in OpenEmbedded for referencing a particular version. Moving them out
