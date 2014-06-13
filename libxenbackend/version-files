@@ -1,0 +1,6 @@
+src/xenbackend-head.h.in
+src/xenbackend-tail.h
+src/prototypes.h
+src/ext_prototypes.h
+src/backend.c
+src/project.h

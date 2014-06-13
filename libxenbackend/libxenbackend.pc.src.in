@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libxenbackend
+Description: Xen PV Backend Library
+Version: @VERSION@
+Libs: -L${libdir} -lxenbackend @LIBXC_LIB@ @LIBXENSTORE_LIB@ @PTHREAD_LIB@
+Cflags: -I${includedir}

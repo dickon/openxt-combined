@@ -1,0 +1,35 @@
+#ifndef __XENBACKEND_H__
+# define __XENBACKEND_H__
+
+# ifdef __cplusplus
+extern "C"
+{
+# endif
+    struct xen_device;
+    struct xen_backend;
+    typedef struct xen_backend *xen_backend_t;;
+
+    typedef void *backend_private_t;
+
+    typedef void *xen_device_t;
+
+    struct xen_backend_ops
+    {
+        xen_device_t    (*alloc)            (xen_backend_t backend,
+                                             int devid,
+                                             backend_private_t priv);
+        int             (*init)             (xen_device_t xendev);
+        int             (*connect)          (xen_device_t xendev);
+        void            (*disconnect)       (xen_device_t xendev);
+        void            (*backend_changed)  (xen_device_t xendev,
+                                             const char *node,
+                                             const char *val);
+        void            (*frontend_changed) (xen_device_t xendev,
+                                             const char *node,
+                                             const char *val);
+        void            (*event)            (xen_device_t xendev);
+        void            (*free)             (xen_device_t xendev);
+    };
+
+
+
