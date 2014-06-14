@@ -203,6 +203,12 @@ EOF
 	if [ ! -e conf/local.conf ]; then
 	    ln -s ../../../local.conf conf/local.conf
 	fi
+	if [ ! -e COPYING.GPLv2 ]; then
+            ln -s ../../xenclient-oe/COPYING.GPLv2 COPYING.GPLv2
+        fi
+	if [ ! -e COPYING.MIT ]; then
+            ln -s ../../xenclient-oe/COPYING.MIT COPYING.MIT
+        fi
 	popd
 }
 
