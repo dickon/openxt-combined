@@ -37,6 +37,7 @@ python do_filter_prefunc() {
 # our own version of unpack which is compatible with old repo class 
 python do_unpack_xc_repos() {
     from bb.fetch import runfetchcmd
+    from os.path import dirname
     xc_repos = get_xc_repos(d)
     for repo in xc_repos:
         workdir = bb.data.getVar("WORKDIR", d, True)
@@ -48,7 +49,8 @@ python do_unpack_xc_repos() {
             runfetchcmd("ln -s %s%s %s/patchqueue" % (reltop, repo[5:], workdir), d)
 	    continue
         if repo.startswith('lndir://'):
-            runfetchcmd("lndir -s %s%s %s/git" % (reltop, repo[5:], workdir), d)
+            runfetchcmd("mkdir -p %s/git" % (workdir), d)
+            runfetchcmd("lndir %s/%s %s/git" % (dirname(dirname(topdir)), repo[8:], workdir), d)
 	    continue
         if repo.startswith('copy://'):
             runfetchcmd("cp -r %s%s/ %s/git" % (reltop, repo[5:], workdir), d)
