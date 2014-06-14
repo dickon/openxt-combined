@@ -53,7 +53,7 @@ python do_unpack_xc_repos() {
             runfetchcmd("lndir %s/%s %s/git" % (dirname(dirname(topdir)), repo[8:], workdir), d)
 	    continue
         if repo.startswith('copy://'):
-            runfetchcmd("cp -r %s%s/ %s/git" % (reltop, repo[5:], workdir), d)
+            runfetchcmd("cp -r %s%s/* %s/git" % (reltop, repo[5:], workdir), d)
 	    continue
         (type_, host, path, user, pswd, parm) = bb.decodeurl(bb.data.expand(repo, d))
         if parm.has_key("destsuffix"):
