@@ -17,16 +17,27 @@ do_apply_patchqueue(){
             ln -sf ${WORKDIR}/patchqueue .git/patches
         fi
     elif [ ! -d ${WORKDIR}/git/.git ]; then
-        # If there is no .git directory then we are not using the
-        # repository directly (but rather a copy generated from a tarball)
-        # This is the normally the case for builds external to Citrix.
-        # In this case the patchqueue has been unpacked into the
-        # same directory as the sources.
-        # TODO: Fix this so the patchqueue gets installed
-        # in the correct location.
 	pushd ${WORKDIR}/git
-	QUILT_PATCHES=${WORKDIR}/git/master
 	GUILT=quilt
+        if [ -d ${WORKDIR}/patchqueue ]; then
+	    if [ -f ${WORKDIR}/patchqueue/master/series ]; then
+    	        ln -sf ../patchqueue/master ${WORKDIR}/git/patches
+                QUILT_PATCHES=${WORKDIR}/patchqueue/master
+            else
+    	        ln -sf ../patchqueue ${WORKDIR}/git/patches
+                QUILT_PATCHES=${WORKDIR}/patchqueue
+            fi
+	    touch ${QUILT_PATCHES}/guards
+        else
+            # If there is no .git directory then we are not using the
+            # repository directly (but rather a copy generated from a tarball)
+            # This is the normally the case for builds external to Citrix.
+            # In this case the patchqueue has been unpacked into the
+            # same directory as the sources.
+            # TODO: Fix this so the patchqueue gets installed
+            # in the correct location.
+    	    QUILT_PATCHES=${WORKDIR}/git/master
+       fi
     else
         # If patches is a link then we have set up the patchqueue symlink already
 	if [ ! -L ${WORKDIR}/git/.git/patches ]; then
@@ -41,7 +52,7 @@ do_apply_patchqueue(){
 	fi
 	pushd ${WORKDIR}/git
     fi
-
+    echo "patch queue in ${QUILT_PATCHES}"
     # Create series and status if missing, push pq, pop folder
     if [ -d .git/patches/master ]; then
 	pushd .git/patches/master
