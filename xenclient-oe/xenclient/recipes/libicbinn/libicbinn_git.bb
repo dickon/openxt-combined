@@ -2,7 +2,7 @@ DESCRIPTION = "libicbinn"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=321bf41f280cf805086dd5a720b37785"
 
-SRC_URI = "lndir://icbinn.git"
+SRC_URI = "lndir://icbinn"
 SRC_URI += "file://icbinn_svc.initscript"
 
 DEPENDS = "libv4v libtirpc xenclient-idl xenclient-rpcgen-native libxcdbus"
