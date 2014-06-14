@@ -4,7 +4,7 @@ inherit xenclient-pq
 PV = "${XEN_VERSION}"
 
 SRC_URI = "${XEN_SRC_URI} \
-	   pq://xen-common-pq.git"
+	   pq://xen-common-pq"
 
 
 SRC_URI[md5sum] := "${XEN_SRC_MD5SUM}"
