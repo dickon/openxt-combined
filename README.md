@@ -10,7 +10,7 @@ into a single repository.
 Dickon was thinking about how to do automated builds and verison control in a way that works for
 multiple organsiations and figured to set this up as a strawman.
 
-Currently setupoe works and I have initramfs running (but not yet finished).
+Currently setupoe and initramfs builds complete and later steps are running.
 
 # Background
 
