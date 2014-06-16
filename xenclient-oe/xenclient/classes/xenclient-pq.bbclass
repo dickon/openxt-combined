@@ -1,21 +1,33 @@
 do_apply_patchqueue(){
     # Handle insane patchqueue
+    set -e
     GUILT=guilt
     MACHINE="${MACHINE_ARCH}"
 
     export EMAIL="local.changes@example.com"
     export GIT_AUTHOR_NAME="Local Changes"
 
-    if [ ! -d ${WORKDIR}/git ]; then
+    if [ ! -d ${WORKDIR}/git ] && [ -d ${WORKDIR}/patchqueue/.git ]; then
         # We are not using git for the upstream kernel (tarball from kernel.org)
 	# and patch queue is from git repo.
 	pushd ${S}
-        if [ ! -d ${S}/.git/patches ]; then
+        if [ ! -d ${S}/.git ]; then
             git init
             git add -f .
             git commit -m "import from upstream"
             ln -sf ${WORKDIR}/patchqueue .git/patches
         fi
+    elif [ ! -d ${WORKDIR}.git ]; then
+	GUILT=quilt
+	pushd ${S}
+        if [ -f ${WORKDIR}/patchqueue/master/series ]; then
+    	   ln -sf ../patchqueue/master ${S}/patches
+                QUILT_PATCHES=${WORKDIR}/patchqueue/master
+            else
+    	        ln -sf ../patchqueue ${$}/patches
+                QUILT_PATCHES=${WORKDIR}/patchqueue
+            fi
+	    touch ${QUILT_PATCHES}/guards
     elif [ ! -d ${WORKDIR}/git/.git ]; then
 	pushd ${WORKDIR}/git
 	GUILT=quilt
