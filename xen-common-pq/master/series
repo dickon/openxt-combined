@@ -168,3 +168,7 @@ blktap-instrumentation
 blktap-timeout
 disable-24bit-vbe-modes
 # update-makefile-for-qemu-1.7 # depends on qemu-config, commented out above
+
+no-python-config
+disable-xen-root-check
+disable-etherboot

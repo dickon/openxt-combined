@@ -1,4 +1,4 @@
-diff --git a/Config.mk b/Config.mk
+bdiff --git a/Config.mk b/Config.mk
 index 985feb4..e964064 100644
 --- a/Config.mk
 +++ b/Config.mk

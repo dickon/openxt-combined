@@ -1,10 +1,5 @@
 require xen.inc
 
-SRC_URI += "file://config.patch \
-	    file://disable-xen-root-check.patch \
-	    file://disable-etherboot.patch \
-"
-
 DEPENDS += "seabios ipxe"
 DEPENDS += "util-linux"
 
