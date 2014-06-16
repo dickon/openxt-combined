@@ -15,9 +15,9 @@ do_apply_patchqueue(){
             git init
             git add -f .
             git commit -m "import from upstream"
-            ln -sf ${WORKDIR}/patchqueue .git/patches
-        fi
-    elif [ ! -d ${WORKDIR}.git ]; then
+	fi
+	ln -sf ${WORKDIR}/patchqueue .git/patches
+    elif [ ! -d ${WORKDIR}/git ]; then
 	GUILT=quilt
 	pushd ${S}
         if [ -f ${WORKDIR}/patchqueue/master/series ]; then
@@ -64,7 +64,7 @@ do_apply_patchqueue(){
 	fi
 	pushd ${WORKDIR}/git
     fi
-    echo "patch queue in ${QUILT_PATCHES}"
+    echo "patch queue in ${QUILT_PATCHES}; managed using ${GUILT}"
     # Create series and status if missing, push pq, pop folder
     if [ -d .git/patches/master ]; then
 	pushd .git/patches/master
