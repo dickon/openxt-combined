@@ -10,7 +10,10 @@ into a single repository.
 Dickon was thinking about how to do automated builds and verison control in a way that works for
 multiple organsiations and figured to set this up as a strawman.
 
-Currently setupoe and initramfs builds complete and I get compile problems in later steps.
+Currently setupoe and initramfs builds complete and I get compile problems in dom0 building Java,
+which I also get with upstream OpenXT. The magnitude of this change and the complexity of our use of
+OpenEmbedded guarantee there  will still be some issues to find. I have for instance not started looking
+at the in guest tools or SyncXT build.
 
 # Background
 
