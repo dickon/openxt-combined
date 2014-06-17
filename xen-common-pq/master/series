@@ -169,6 +169,6 @@ blktap-timeout
 disable-24bit-vbe-modes
 # update-makefile-for-qemu-1.7 # depends on qemu-config, commented out above
 
-no-python-config
-disable-xen-root-check
-disable-etherboot
+no-python-config # from xen-firmware recipe
+disable-xen-root-check # from xen-firmware recipe
+disable-etherboot # from xen-firmware recipe
