@@ -217,7 +217,7 @@ check_repo_signing_file()
     # TODO: Add script to generate set of production/development CA
     # certificates and signing certificates and refer to it in this
     # error message.
-    if [ ! -e "$FILE" ] ; then
+    if [ ! -f "$FILE" ] ; then
         cat <<EOF >&2
 Error: $DESC '$FILE' not found.
 EOF
