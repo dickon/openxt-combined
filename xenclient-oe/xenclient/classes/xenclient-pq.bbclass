@@ -76,6 +76,7 @@ do_apply_patchqueue(){
 	popd
     fi
     $GUILT push -a
+    echo guilt push -a exited with code $?
     popd
 }
 addtask apply_patchqueue after do_patch before do_configure
