@@ -97,7 +97,6 @@ large-remap						# XCE    : Support mapping whole batch in do_mmu_update
 dom0_auto_mem						# XCE    : Variable sized dom0 mem 
 rombios-faster						# XCE    : Speed up guest POST by disabling floppy, and cdrom boot
 
-include-seabios						# Take Seabios from the orc-xen tree instead of upstream git
 
 ##
 ## XSA patches - remove when we update to Xen version including these
